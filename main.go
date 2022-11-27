@@ -2,10 +2,13 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
 	"text/template"
+
+	"github.com/joho/godotenv"
 )
 
 func commands(w http.ResponseWriter, r *http.Request) {
@@ -67,6 +70,12 @@ func init() {
 }
 
 func main() {
+	// Load() --> reads the .env file and loads the set variables into the environment
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("Error in loading .env files..")
+	}
+
 	fmt.Println("Virtual Terminal Service Starts ...")
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -82,13 +91,10 @@ func main() {
 	http.HandleFunc("/health", healthCheckUp)
 
 	// /cmd endpoint is mapped to cmd
-	// http.HandleFunc("/home", home)
-
-	// /cmd endpoint is mapped to cmd
 	http.HandleFunc("/cmd", commands)
 
 	// Server Listening on localhost:9009
-	err := http.ListenAndServe(":"+port, nil) // setting listening port
+	err = http.ListenAndServe(":"+port, nil) // setting listening port
 	if err != nil {
 		panic(err)
 	}

@@ -28,7 +28,7 @@ Internally "/cmd" endpoint is called. All the output of the data are sent to "/c
     
     You can provide your own custom port
     
-     `go run main.go  5000`
+     Replace PORT number by your own number in .env file.
 
 *NOTE:*: Make sure that Port 9090 is free. By defaul Port is 9090. But you can customize accordingly by passing port number after command(go run main.go).
 
