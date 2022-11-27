@@ -3,6 +3,8 @@
 
 It is a service which takes commands from the user as the input and return the output of the corresponding command. 
 
+NOTE: Make sure that the command you are tryng to execute must present in your local workspace or in the container. And that also command should be of non-interactive in nature. 
+
 It provides 2 service.
 
 1) /health: this endpoint ensures that app is running and up.
