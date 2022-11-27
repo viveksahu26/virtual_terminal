@@ -1,36 +1,25 @@
-<!-- <!DOCTYPE html>
-<head>
-    
-</head>
-<body style="background-image: url('rhel.png');">
-    <form action="/commands">
-        
-        <link rel="stylesheet" href="style.css">
-        <label for="cmd"><h2 style="font-size: 500%; background-color:rgb(31, 30, 24); color:red; text-align: center;"><b><strong>Enter Linux command:</strong></b></h2></label>
-        <input type="text" name="command" ><br><br>
-        <input type="submit" value="submit">
-    </form>
-    
-</body> -->
-
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 <head>
-    <!-- <link rel="stylesheet" href="/assets/style.css"> -->
-    <title>"virtual terminal"</title>
-<!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/url.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
+  <title>Web Terminal || viveksahu26</title>
 </head>
-
 <body>
-    <h1>"Welcome to Home Page !!</h1>
-    <!-- form will redirected or route to /cmd endpoint with post method -->
-    <form action="/cmd" method="POST" >
-        
-        <!-- <label for="command"><h2 style="font-size: 500%; background-color:rgb(31, 30, 24); color:red; text-align: center;"><b><strong>Virtual Terminal</strong></b></h2></label> -->
-        <!-- <label for="xyz"><h4 style="font-size:large; font-family: sans-serif; text-align: center; "></h4></label> -->
-        <label for="c">Enter Your Command: </label>
-        <input type="text"  name="command" placeholder="Enter Your Commands" id="c"><br><br>
-        <input type="submit" value="Enter">
-    </form>
+  <div class="card">
+    <div class="text">
+      <h1>Web Terminal !!</h1>
+    </div>
+      <form method="POST" action="/cmd">
+          <label for="c">$ </label>
+          <input type="text" name="command" id="c" placeholder="Enter Your Commands" style="font-size: 25px; color:red; text-align: center;"><br><br><br><br>
+          <input type="submit" name="submit" value="Send" style="font-size: 20px; color:black ">
+      </form>
+  </div>
+  <div class="credit">Made with <span style="color:tomato">❤</span> by <a style="color:deeppink ;">viveksahu26</a></div>    
+  <div class="space"></div>
 </body>
 </html>

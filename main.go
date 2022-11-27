@@ -52,7 +52,7 @@ func healthCheckUp(w http.ResponseWriter, r *http.Request) {
 func home(w http.ResponseWriter, r *http.Request) {
 	// if r.Method == "GET" {
 	fmt.Println("GET")
-	err := tpl.ExecuteTemplate(w, "url.html", nil)
+	err := tpl.ExecuteTemplate(w, "index.html", nil)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
