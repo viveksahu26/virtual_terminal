@@ -17,7 +17,7 @@ func commands(w http.ResponseWriter, r *http.Request) {
 	command := r.FormValue("command")
 	fmt.Println("command by user is: ", command)
 
-	// cmd := exec.Command(command[0])
+	// cmd := exec.Command("bash", "-c", command)
 	cmds := exec.Command("bash", "-c", command)
 
 	Stdout, err := cmds.Output()
