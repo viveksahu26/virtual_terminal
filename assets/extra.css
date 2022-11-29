@@ -1,0 +1,28 @@
+.card {
+    background: #12192c;
+    border-radius: 20px;
+    height: auto;
+    width: auto;
+    height:auto;
+    place-items: center;
+    /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); */
+    text-align:center;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
+    padding: 1em;
+    overflow:visible;
+    color:royalblue;
+}
+
+body {
+    background: #DCE35B; 
+    /* background: -webkit-linear-gradient(to right, #45B649, #DCE35B); 
+    background: linear-gradient(to right, #45B649, #DCE35B);  */
+    display:table;
+    place-items: center; 
+    height: auto;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+  }
