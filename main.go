@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -14,7 +13,7 @@ import (
 // It process commands provided by the user and return back to the user.
 func commands(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		http.Redirect(w, r, "/home", http.StatusSeeOther)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 	// extracting values from form
@@ -30,9 +29,11 @@ func commands(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := struct {
-		Output string
+		Output  string
+		Command string
 	}{
-		Output: string(Stdout),
+		Output:  string(Stdout),
+		Command: command,
 	}
 
 	tpl.ExecuteTemplate(w, "extra.html", data)
@@ -55,8 +56,6 @@ func healthCheckUp(w http.ResponseWriter, r *http.Request) {
 
 // It is the user interface to enter it's commands.
 func home(w http.ResponseWriter, r *http.Request) {
-	// if r.Method == "GET" {
-	fmt.Println("GET")
 	err := tpl.ExecuteTemplate(w, "index.html", nil)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -89,8 +88,8 @@ func main() {
 	fs := http.FileServer(http.Dir("assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
-	// /home endpoint is mapped to home
-	http.HandleFunc("/home", home)
+	// / endpoint is mapped to home
+	http.HandleFunc("/", home)
 
 	// /health endpoint is mapped to healthCheckUp
 	http.HandleFunc("/health", healthCheckUp)
