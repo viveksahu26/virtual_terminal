@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -23,9 +24,7 @@ func commands(w http.ResponseWriter, r *http.Request) {
 	cmds := exec.Command("bash", "-c", command)
 	Stdout, err := cmds.Output()
 	if err != nil {
-		w.Write([]byte("Command is either incorrect or command is interactive in nature. \nPlease make sure command is correct and non-interactive in nature."))
-		log.Println(err)
-		return
+		Stdout = []byte(fmt.Sprintln(err.Error() + "\nCommand is either incorrect or command is interactive in nature"))
 	}
 
 	data := struct {
