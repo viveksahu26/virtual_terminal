@@ -11,33 +11,34 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// It process commands provided by the user and return back to the user.
 func commands(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		http.Redirect(w, r, "/home", http.StatusSeeOther)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
-
+	// extracting values from form
 	command := r.FormValue("command")
-	fmt.Println("command by user is: ", command)
+	log.Println("Command entered by the user is: ", command)
 
-	// cmd := exec.Command("bash", "-c", command)
 	cmds := exec.Command("bash", "-c", command)
-
 	Stdout, err := cmds.Output()
 	if err != nil {
-		w.Write([]byte("Command is Incorrect. Please enter correct command."))
-		fmt.Println(err.Error())
-		return
-	}
-	d := struct {
-		Output string
-	}{
-		Output: string(Stdout),
+		Stdout = []byte(fmt.Sprintln(err.Error() + "\nCommand is either incorrect or command is interactive in nature"))
 	}
 
-	tpl.ExecuteTemplate(w, "extra.html", d)
+	data := struct {
+		Output  string
+		Command string
+	}{
+		Output:  string(Stdout),
+		Command: command,
+	}
+
+	tpl.ExecuteTemplate(w, "extra.html", data)
 }
 
+// It is to check server is up and working.
 func healthCheckUp(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/health" {
 		http.Error(w, "404 not found", http.StatusNotFound)
@@ -52,9 +53,8 @@ func healthCheckUp(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("<h1>Health of Server is UP & Running... !!</h1>"))
 }
 
+// It is the user interface to enter it's commands.
 func home(w http.ResponseWriter, r *http.Request) {
-	// if r.Method == "GET" {
-	fmt.Println("GET")
 	err := tpl.ExecuteTemplate(w, "index.html", nil)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -64,7 +64,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 var tpl *template.Template
 
-// Initialize it with all *.html files from template folders..
+// Init() initializes all * files from template folders
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 }
@@ -76,25 +76,29 @@ func main() {
 		log.Println("Error in loading .env files..")
 	}
 
-	fmt.Println("Virtual Terminal Service Starts ...")
+	log.Println("Virtual Terminal Service Starts ...")
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "9090"
 	}
-	fmt.Println("PORT is: ", port)
+	log.Println("PORT no. assigned to the app is: ", port)
 
 	fs := http.FileServer(http.Dir("assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
-	http.HandleFunc("/home", home)
+
+	// / endpoint is mapped to home
+	http.HandleFunc("/", home)
 
 	// /health endpoint is mapped to healthCheckUp
 	http.HandleFunc("/health", healthCheckUp)
 
 	// /cmd endpoint is mapped to cmd
+	// It is internally invoked by form.
 	http.HandleFunc("/cmd", commands)
 
-	// Server Listening on localhost:9009
-	err = http.ListenAndServe(":"+port, nil) // setting listening port
+	// Server Listening on localhost:<port>
+	err = http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		panic(err)
 	}

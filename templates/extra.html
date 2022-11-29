@@ -1,12 +1,25 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 <head>
-    <title>"OUTPUT"</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/extra.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
+  <title>Web Terminal || viveksahu26</title>
 </head>
-
 <body>
-    <h1>"Welcome to Output Page !!</h1><br><br>
-    <!-- form will redirected or route to /cmd endpoint with post method -->
-    <h2><pre>{{.Output}}</pre></h2>
+  <div class="card">
+    <div class="text">
+      <h1 style="color:crimson ;"> $ {{.Command}}</h1>
+      <h2 style="font-family:sans-serif ;"><pre>{{.Output}}</pre></h2>
+    </div>
+    <div>
+        <form method="POST" action="/">
+            <input type="submit" name="submit" value="Back" style="font-size: 20px; color:black; ">
+        </form>
+    </div>
+  </div>
+ <div class="space"></div>
 </body>
 </html>
